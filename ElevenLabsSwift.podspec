@@ -13,7 +13,7 @@ Pod::Spec.new do |spec|
   spec.author       = { "elevenlabs" => "support@elevenlabs.io" }
   spec.social_media_url = "https://twitter.com/elevenlabs"
 
-  spec.platform     = :ios, "15.0"
+  spec.platform     = :ios, "12.0"
   spec.source = { :git => "https://github.com/elevenlabs/ElevenLabsSwift.git", :tag => "v#{spec.version}" }
 
   spec.source_files  = "Sources/ElevenLabsSwift/**/*.{swift}"

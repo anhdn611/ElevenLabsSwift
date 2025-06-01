@@ -12,7 +12,8 @@ Pod::Spec.new do |spec|
   spec.license      = { :type => "MIT", :file => "LICENSE" }
   spec.author       = { "elevenlabs" => "support@elevenlabs.io" }
   spec.social_media_url = "https://twitter.com/elevenlabs"
-  spec.source       = "https://github.com/anhdn611/ElevenLabsSwift.git"
+
+  spec.source       = { :git =>  "https://github.com/anhdn611/ElevenLabsSwift.git" }
   spec.platform     = :ios, "12.0"
   spec.source_files  = "Sources/ElevenLabsSwift/**/*.{swift}"
   

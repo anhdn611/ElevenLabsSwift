@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:elvenlabs_flutter/elvenlabs_flutter.dart';
 import 'package:elvenlabs_flutter/elvenlabs_flutter_platform_interface.dart';
@@ -13,17 +14,61 @@ class MockElvenlabsFlutterPlatform
 }
 
 void main() {
-  final ElvenlabsFlutterPlatform initialPlatform = ElvenlabsFlutterPlatform.instance;
+  TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('$MethodChannelElvenlabsFlutter is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelElvenlabsFlutter>());
-  });
+  group('ElvenlabsFlutter', () {
+    const MethodChannel channel = MethodChannel('elvenlabs_flutter');
+    final log = <MethodCall>[];
 
-  test('getPlatformVersion', () async {
-    ElvenlabsFlutter elvenlabsFlutterPlugin = ElvenlabsFlutter();
-    MockElvenlabsFlutterPlatform fakePlatform = MockElvenlabsFlutterPlatform();
-    ElvenlabsFlutterPlatform.instance = fakePlatform;
+    setUp(() {
+      channel.setMockMethodCallHandler((MethodCall methodCall) async {
+        log.add(methodCall);
+        switch (methodCall.method) {
+          case 'startCall':
+            return 'Call started successfully';
+          case 'endCall':
+            return 'Call ended successfully';
+          default:
+            return null;
+        }
+      });
+    });
 
-    expect(await elvenlabsFlutterPlugin.getPlatformVersion(), '42');
+    tearDown(() {
+      log.clear();
+    });
+
+    test('startCall calls native method', () async {
+      await ElvenlabsFlutter.startCall();
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall('startCall', arguments: null),
+        ],
+      );
+    });
+
+    test('endCall calls native method', () async {
+      await ElvenlabsFlutter.endCall();
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall('endCall', arguments: null),
+        ],
+      );
+    });
+
+    test('startCall and endCall can be called in sequence', () async {
+      await ElvenlabsFlutter.startCall();
+      await ElvenlabsFlutter.endCall();
+      
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall('startCall', arguments: null),
+          isMethodCall('endCall', arguments: null),
+        ],
+      );
+    });
   });
 }

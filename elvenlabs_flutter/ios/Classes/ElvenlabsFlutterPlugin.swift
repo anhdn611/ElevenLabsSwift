@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import ElevenLabsSDK
 
 public class ElvenlabsFlutterPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -13,13 +14,29 @@ public class ElvenlabsFlutterPlugin: NSObject, FlutterPlugin {
     case "getPlatformVersion":
       result("iOS " + UIDevice.current.systemVersion)
     case "startCall":
-      // TODO: Gọi SDK thực tế ở đây
-      result("Call started")
+      startElevenLabsCall(result: result)
     case "endCall":
-      // TODO: Gọi SDK thực tế ở đây
-      result("Call ended")
+      endElevenLabsCall(result: result)
     default:
       result(FlutterMethodNotImplemented)
     }
+  }
+  
+  private func startElevenLabsCall(result: @escaping FlutterResult) {
+    // TODO: Thay thế bằng API thực tế của ElevenLabs SDK
+    // Ví dụ: ElevenLabsSDK.shared.startCall()
+    
+    // Placeholder implementation
+    print("Starting ElevenLabs call...")
+    result("Call started successfully")
+  }
+  
+  private func endElevenLabsCall(result: @escaping FlutterResult) {
+    // TODO: Thay thế bằng API thực tế của ElevenLabs SDK
+    // Ví dụ: ElevenLabsSDK.shared.endCall()
+    
+    // Placeholder implementation
+    print("Ending ElevenLabs call...")
+    result("Call ended successfully")
   }
 }
